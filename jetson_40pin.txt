@@ -1,0 +1,89 @@
+/dts-v1/;
+
+/ {
+	jetson-header-name = "Jetson 40pin Header";
+	overlay-name = "User Custom [2025-03-28-212422]";
+	compatible = "nvidia,p3737-0000+p3701-0000\0nvidia,p3737-0000+p3701-0004\0nvidia,p3737-0000+p3701-0005\0nvidia,p3737-0000+p3701-0008";
+
+	p3737-0000_p3701-0000-hdr40@0 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <0x01>;
+
+			exp-header-pinmux {
+				phandle = <0x01>;
+
+				hdr40-pin12 {
+					nvidia,pins = "soc_gpio41_ph7";
+					nvidia,function = "i2s2";
+					nvidia,tristate = <0x00>;
+					nvidia,enable-input = <0x01>;
+				};
+
+				hdr40-pin35 {
+					nvidia,pins = "soc_gpio44_pi2";
+					nvidia,function = "i2s2";
+					nvidia,tristate = <0x00>;
+					nvidia,enable-input = <0x01>;
+				};
+
+				hdr40-pin38 {
+					nvidia,pins = "soc_gpio43_pi1";
+					nvidia,function = "i2s2";
+					nvidia,tristate = <0x01>;
+					nvidia,enable-input = <0x01>;
+				};
+
+				hdr40-pin40 {
+					nvidia,pins = "soc_gpio42_pi0";
+					nvidia,function = "i2s2";
+					nvidia,tristate = <0x00>;
+					nvidia,enable-input = <0x00>;
+				};
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <0x02>;
+
+			exp-header-pinmux {
+				phandle = <0x02>;
+			};
+		};
+	};
+
+	__symbols__ {
+		jetson_io_pinmux = "/p3737-0000_p3701-0000-hdr40@0/__overlay__/exp-header-pinmux";
+		jetson_io_pinmux_aon = "/fragment@1/__overlay__/exp-header-pinmux";
+	};
+
+	__fixups__ {
+		pinmux = "/p3737-0000_p3701-0000-hdr40@0:target:0";
+		pinmux_aon = "/fragment@1:target:0";
+	};
+
+	__local_fixups__ {
+
+		p3737-0000_p3701-0000-hdr40@0 {
+
+			__overlay__ {
+				pinctrl-0 = <0x00>;
+			};
+		};
+
+		fragment@1 {
+
+			__overlay__ {
+				pinctrl-0 = <0x00>;
+			};
+		};
+	};
+};
+
